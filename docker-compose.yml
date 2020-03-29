@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  launcher:
+    build:
+      context: .
+      dockerfile: ${DOCKERFILE_LAUNCHER}
+    image: launcherserver
+    network_mode: host
+    volumes:
+      - ./launcher:/launcher
+      - /home/jose/.ssh/id_rsa/:/launcher/id_rsa
+    command: ['sleep', 'infinity']
+    
