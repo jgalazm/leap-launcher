@@ -1,7 +1,7 @@
 import paramiko
 import os
 from pprint import pprint
-def run_command(username, pkey, command, blocking=True, use_sudo=False):
+def run_command(username, pkey, command, blocking=True):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect( hostname = "localhost", username = username, pkey = key )   
@@ -9,13 +9,7 @@ def run_command(username, pkey, command, blocking=True, use_sudo=False):
     if not blocking:
         command = command + ' > /dev/null 2>&1 &'
     
-    stdin, stdout, stderr = client.exec_command(command, get_pty=use_sudo)
-
-    if use_sudo:
-        password = os.environ['SUDO_PASS']
-        stdin.write(f'{password}\n')
-        stdin.flush()
-
+    stdin, stdout, stderr = client.exec_command(command)
     stdout = stdout.read().decode('utf-8')
     stderr = stderr.read().decode('utf-8')
     
@@ -24,11 +18,6 @@ def run_command(username, pkey, command, blocking=True, use_sudo=False):
 
 key = paramiko.RSAKey.from_private_key_file("./id_rsa")
 username = 'jose'
-
-# run sudo leapd
-# get_listen_cmd = "sudo leapd"
-# stdout, stderr = run_command(username, key, get_listen_cmd, blocking=False, use_sudo=True)
-
 
 # get list of LISTEN process list
 get_listen_cmd = "lsof -i -P -n"
