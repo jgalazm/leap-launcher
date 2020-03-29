@@ -17,7 +17,7 @@ def run_command(username, pkey, command, blocking=True):
     return stdout, stderr
 
 key = paramiko.RSAKey.from_private_key_file("./id_rsa")
-username = 'jose'
+username = os.environ['SUDO_USER']
 
 # get list of LISTEN process list
 get_listen_cmd = "lsof -i -P -n"
