@@ -47,7 +47,7 @@ class CommandRunner():
         stdin.write(f'{self.sudo_password}\n')
         stdin.flush()
         while True:
-            asyncio.sleep(0.5)
+            await asyncio.sleep(0.5)
             stdout.flush()
             line = stdout.readline()
             if line != b'' and line.decode('utf-8')[:-2] != self.sudo_password:
@@ -71,16 +71,15 @@ class CommandRunner():
                 stdout, stderr = self.run_command(kill_process_cmd)
                 print(stdout)            
 
-    def run_simple_server(self):
-        simple_server_cmd = "cd ~/hands_server && python3 -m http.server "
-        stdout, stderr = self.run_command(simple_server_cmd, False)
+    async def run_simple_server(self):
+        simple_server_cmd = "cd ~/hands_server; python3 -m http.server "
+        await self.run_server_command(simple_server_cmd)
         print(f'ran {simple_server_cmd}\n')        
 
-    def run_hands_server(self):
+    async def run_hands_server(self):
         hands_server_command = "cd ~/hands_server && LD_PRELOAD=./libLeap.so python3 server.py"
-        stdout, stderr = self.run_command(hands_server_command, False)
+        await self.run_server_command(hands_server_command)
         print(f'ran {hands_server_command}\n')        
-
 
     async def run_leapd_server(self):
         await self.run_server_command('leapd')

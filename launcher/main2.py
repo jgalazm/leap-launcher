@@ -18,28 +18,22 @@ async def main():
     processes = cmd_runner.get_listening_process_list()
     print('Processes after kill:\n', processes)
 
-    # # get list of LISTEN process list
-    # processes = cmd_runner.get_listening_process_list()
-    # print(processes)
+    # get list of LISTEN process list
+    processes = cmd_runner.get_listening_process_list()
+    print(processes)
 
-    # # run simple server
-    # cmd_runner.run_simple_server()
-    # processes = cmd_runner.get_listening_process_list()
-    # print('After simple server run:', processes)
+    # run simple server
+    asyncio.create_task(cmd_runner.run_simple_server())
+    processes = cmd_runner.get_listening_process_list()
 
-    # # run hands server
-    # cmd_runner.run_hands_server()
-    # processes = cmd_runner.get_listening_process_list()
-    # print('After simple server run:', processes)
+    # run hands server
+    asyncio.create_task(cmd_runner.run_hands_server())
+    processes = cmd_runner.get_listening_process_list()
 
     # run leapd server
     asyncio.create_task(cmd_runner.run_leapd_server())
-    print('RUN LEAPD-----------')
-    print('RUN LEAPD-----------')
-    print('RUN LEAPD-----------')
-    print('RUN LEAPD-----------')
-    print('RUN LEAPD-----------')
 
 if __name__ == '__main__':
-    asyncio.get_event_loop().create_task(main())
-    asyncio.get_event_loop().run_forever()
+    loop = asyncio.get_event_loop()
+    loop.create_task(main())
+    loop.run_forever()
