@@ -41,10 +41,11 @@ for port in [8000, 8765]:
     stdout, stderr = run_command(username, key, get_killport_cmd)
 
     if stdout != '':
-        process_id = int(stdout)
-        kill_process_cmd = f"kill -9 {process_id}"
-        stdout, stderr = run_command(username, key, kill_process_cmd)
-        print(stdout)
+        for process_id in stdout.split('\n'):
+            process_id = int(process_id)
+            kill_process_cmd = f"kill -9 {process_id}"
+            stdout, stderr = run_command(username, key, kill_process_cmd)
+            print(stdout)
 
 # get list of LISTEN process list
 get_listen_cmd = "lsof -i -P -n"
