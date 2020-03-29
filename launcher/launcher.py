@@ -1,6 +1,6 @@
 import paramiko
 from enum import Enum
-
+import asyncio
 
 class ServersPorts(Enum):
     SIMPLE_SERVER_PORT = 8000
@@ -32,6 +32,27 @@ class CommandRunner():
         client.close()
         return stdout, stderr
 
+    async def run_server_command(self, command):
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.connect( hostname = "localhost", username = self.username, pkey = self.key )   
+
+
+        session = client.get_transport().open_session()
+        session.set_combine_stderr(True)
+        session.get_pty()
+        session.exec_command(f'sudo bash -c "{command}"')
+        stdin = session.makefile('wb', -1)
+        stdout = session.makefile('rb', -1)
+        stdin.write(f'{self.sudo_password}\n')
+        stdin.flush()
+        while True:
+            asyncio.sleep(0.5)
+            stdout.flush()
+            line = stdout.readline()
+            if line != b'' and line.decode('utf-8')[:-2] != self.sudo_password:
+                print(line)
+
     def get_listening_process_list(self):
         get_listen_cmd = "lsof -i -P -n"
         stdout, stderr = self.run_command(get_listen_cmd)
@@ -61,22 +82,5 @@ class CommandRunner():
         print(f'ran {hands_server_command}\n')        
 
 
-    def run_leapd_server(self):
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect( hostname = "localhost", username = self.username, pkey = self.key )   
-
-
-        session = client.get_transport().open_session()
-        session.set_combine_stderr(True)
-        session.get_pty()
-        session.exec_command('sudo bash -c "leapd"')
-        stdin = session.makefile('wb', -1)
-        stdout = session.makefile('rb', -1)
-        stdin.write(f'{self.sudo_password}\n')
-        stdin.flush()
-        while True:
-            stdout.flush()
-            line = stdout.readline()
-            if line != b'':
-                print(line)
+    async def run_leapd_server(self):
+        await self.run_server_command('leapd')
