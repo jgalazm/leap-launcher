@@ -4,7 +4,7 @@ services:
   launcher:
     build:
       context: .
-      dockerfile: ${DOCKERFILE_LAUNCHER}
+      dockerfile: Dockerfile
     image: launcherserver
     network_mode: host
     volumes:
