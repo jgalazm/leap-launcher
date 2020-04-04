@@ -1,6 +1,6 @@
 import os
 import paramiko
-from quart import Quart, jsonify
+from quart import Quart, make_response, jsonify
 import launcher
 
 key = paramiko.RSAKey.from_private_key_file("./launcher/id_rsa")
@@ -17,6 +17,13 @@ async def list_processes():
         "processes": processes 
     })
 
+@app.route("/kill", methods=["DELETE"])
+async def kill_servers():
+    """ Send kill -9 commands to all servers """
+    cmd_runner.kill_servers()
+    res = await make_response(jsonify({}), 200)
+    return res
+# curl -X DELETE http://localhost:5000/kill
 
 # /kill
 
