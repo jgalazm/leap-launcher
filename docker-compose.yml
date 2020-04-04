@@ -13,5 +13,5 @@ services:
     volumes:
       - ./launcher:/launcher
       - /home/jose/.ssh/id_rsa/:/launcher/id_rsa
-    command: ['sleep', 'infinity']
+    # command: ['sleep', 'infinity']
     
