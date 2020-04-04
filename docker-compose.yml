@@ -11,7 +11,7 @@ services:
       - SUDO_USER=${SUDO_USER}
       - SUDO_PASS=${SUDO_PASS}
     volumes:
-      - ./launcher:/launcher
-      - /home/jose/.ssh/id_rsa/:/launcher/id_rsa
+      - ./src:/code
+      - /home/jose/.ssh/id_rsa/:/code/launcher/id_rsa
     # command: ['sleep', 'infinity']
     
