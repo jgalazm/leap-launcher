@@ -12,15 +12,9 @@ async def main():
     cmd_runner = launcher.CommandRunner(username, key, sudo_password)
 
     # kill servers
-    processes = cmd_runner.get_listening_process_list()
-    print('Processes before kill:\n', processes)
+    print('Processes before kill:\n', cmd_runner.get_listening_process_list())
     cmd_runner.kill_servers()
-    processes = cmd_runner.get_listening_process_list()
-    print('Processes after kill:\n', processes)
-
-    # get list of LISTEN process list
-    processes = cmd_runner.get_listening_process_list()
-    print(processes)
+    print('Processes after kill:\n', cmd_runner.get_listening_process_list())
 
     # run simple server
     asyncio.create_task(cmd_runner.run_simple_server())
