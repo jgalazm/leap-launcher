@@ -35,13 +35,18 @@ async def launch_web_server():
     res = await make_response(jsonify({}), 200)
     return res
 
-# 
+@app.route("/launch/hands", methods=["POST"])
+async def launch_hands_server():
+    """Launches the hands server at port 8000"""
+    # curl -X POST http://localhost:5000/launch/hands
+    asyncio.create_task(cmd_runner.run_hands_server())
+    res = await make_response(jsonify({}), 200)
+    return res
 
-# /kill
-
-# /launch/web
-
-# /launch/hands
-
-# /launch/leapd
-
+@app.route("/launch/leapd", methods=["POST"])
+async def launch_leapd_server():
+    """Launches the leapd server at port 8000"""
+    # curl -X POST http://localhost:5000/launch/leapd
+    asyncio.create_task(cmd_runner.run_leapd_server())
+    res = await make_response(jsonify({}), 200)
+    return res
