@@ -33,16 +33,13 @@ class CommandRunner():
 
             stdout = stdout.read().decode('utf-8')
             stderr = stderr.read().decode('utf-8')
-            print('stdout', stdout)
-            print('stderr', stderr)
             client.close()
             return stdout, stderr
         if sudo:
             session = client.get_transport().open_session()
             session.set_combine_stderr(True)
             session.get_pty()
-            true_command = f'sudo {command}'
-            session.exec_command(true_command)
+            session.exec_command(command)
             stdin = session.makefile('wb', -1)
             stdout = session.makefile('rb', -1)
             stdin.write(f'{self.sudo_password}\n')
@@ -50,7 +47,6 @@ class CommandRunner():
 
             stdout.flush()
             stdout = stdout.read().decode('utf-8')
-            print('stdout', stdout)
             client.close()
             return stdout
 
@@ -81,7 +77,7 @@ class CommandRunner():
             await asyncio.get_event_loop().run_in_executor(pool, self.read_and_print_stdout, stdout)
 
     def get_listening_process_list(self):
-        get_listen_cmd = "lsof -i -P -n"
+        get_listen_cmd = "sudo lsof -i -P -n"
         stdout = self.run_command(get_listen_cmd, sudo=True)
         return [l for l in stdout.split('\n') if 'LISTEN' in l]
 
