@@ -1,6 +1,8 @@
 import paramiko
 from enum import Enum
 import asyncio
+import concurrent.futures
+import time
 
 class ServersPorts(Enum):
     SIMPLE_SERVER_PORT = 8000
@@ -31,6 +33,14 @@ class CommandRunner():
 
         client.close()
         return stdout, stderr
+    
+    def read_and_print_stdout(self, stdout):
+        while True:
+            time.sleep(0.5)
+            stdout.flush()
+            line = stdout.readline()
+            if line != b'' and line.decode('utf-8')[:-2] != self.sudo_password:
+                print(line)
 
     async def run_server_command(self, command):
         client = paramiko.SSHClient()
@@ -41,17 +51,16 @@ class CommandRunner():
         session = client.get_transport().open_session()
         session.set_combine_stderr(True)
         session.get_pty()
-        session.exec_command(f'sudo bash -c "{command}"')
+        # run commands as user, not as root
+        true_command = f'runuser -l {self.username} -c \'{command}\' '
+        true_command = f'sudo bash -c "{true_command}"'
+        session.exec_command(true_command)
         stdin = session.makefile('wb', -1)
         stdout = session.makefile('rb', -1)
         stdin.write(f'{self.sudo_password}\n')
         stdin.flush()
-        while True:
-            await asyncio.sleep(0.5)
-            stdout.flush()
-            line = stdout.readline()
-            if line != b'' and line.decode('utf-8')[:-2] != self.sudo_password:
-                print(line)
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            await asyncio.get_event_loop().run_in_executor(pool, self.read_and_print_stdout, stdout)
 
     def get_listening_process_list(self):
         get_listen_cmd = "lsof -i -P -n"

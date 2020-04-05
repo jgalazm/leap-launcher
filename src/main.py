@@ -1,4 +1,5 @@
 import os
+import asyncio
 import paramiko
 from quart import Quart, make_response, jsonify
 import launcher
@@ -12,6 +13,7 @@ cmd_runner = launcher.CommandRunner(username, key, sudo_password)
 app = Quart(__name__)
 @app.route('/processes', methods=['GET'])
 async def list_processes():
+    # curl -X GET http://localhost:5000/processes
     processes = cmd_runner.get_listening_process_list()
     return jsonify({
         "processes": processes 
@@ -20,10 +22,20 @@ async def list_processes():
 @app.route("/kill", methods=["DELETE"])
 async def kill_servers():
     """ Send kill -9 commands to all servers """
+    # curl -X DELETE http://localhost:5000/kill
     cmd_runner.kill_servers()
     res = await make_response(jsonify({}), 200)
     return res
-# curl -X DELETE http://localhost:5000/kill
+
+@app.route("/launch/web", methods=["POST"])
+async def launch_web_server():
+    """Launches the web server at port 8000"""
+    # curl -X POST http://localhost:5000/launch/web
+    asyncio.create_task(cmd_runner.run_simple_server())
+    res = await make_response(jsonify({}), 200)
+    return res
+
+# 
 
 # /kill
 
