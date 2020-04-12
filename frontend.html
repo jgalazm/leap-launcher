@@ -11,8 +11,10 @@
     }
   </style>
   <script>
+    let logs = [];
+
     const getList = () => {
-      fetch("http://localhost:5000/api/processes")
+      return fetch("http://localhost:5000/api/processes")
         .then((r) => r.json())
         .then((r) => {
           const element = document.getElementById("logs");
@@ -20,16 +22,15 @@
         });
     };
     const killAll = () => {
-      fetch("http://localhost:5000/api/kill", { method: "DELETE" })
+      return fetch("http://localhost:5000/api/kill", { method: "DELETE" })
         .then((r) => r.json())
         .then((r) => {
-          //   const element = document.getElementById("logs");
-          //   element.innerText = JSON.stringify(r, null, 2);
+            console.log("api/kill", r);
         });
     };
 
     const webServer = () => {
-      fetch("http://localhost:5000/api/launch/web", { method: "POST" }).then(
+      return fetch("http://localhost:5000/api/launch/web", { method: "POST" }).then(
         (r) => {
           console.log("api/launch/web", r);
         }
@@ -37,7 +38,7 @@
     };
 
     const handsServer = () => {
-      fetch("http://localhost:5000/api/launch/hands", { method: "POST" }).then(
+      return fetch("http://localhost:5000/api/launch/hands", { method: "POST" }).then(
         (r) => {
           console.log("api/launch/hands", r);
         }
@@ -45,12 +46,25 @@
     };
 
     const leapServer = () => {
-      fetch("http://localhost:5000/api/launch/leapd", { method: "POST" }).then(
+      return fetch("http://localhost:5000/api/launch/leapd", { method: "POST" }).then(
         (r) => {
           console.log("api/launch/leapd", r);
         }
       );
     };
+
+    const launchAll = () => {
+
+        const promises = [
+            webServer(),
+            handsServer(),
+            leapServer()
+        ];
+
+        Promise.all(promises).then(r=>{
+
+        })
+    }
   </script>
 </head>
 
@@ -61,6 +75,10 @@
     <button onclick="webServer()">Launch web server</button>
     <button onclick="handsServer()">Launch hands server</button>
     <button onclick="leapServer()">Launch leap motion server</button>
+    <button onclick="launchAll()">Launch</button>
+  </section>
+  <section id="status">
+
   </section>
   <section id="logs"></section>
 </body>
