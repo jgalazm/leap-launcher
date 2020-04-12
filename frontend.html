@@ -1,0 +1,27 @@
+<head>
+    <style>
+        body {
+            background: #222831;
+            color: eeeeee;
+        }
+        section {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+    <script>
+        const getList = () => {
+            fetch("http://localhost:5000/api/processes").then(r=>r.json()).then(r=>{
+                const element = document.getElementById('logs')
+                element.innerText = JSON.stringify(r, null, 2);
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <section >
+        <button onclick="getList()">Processes list</button>
+    </section>
+    <section id="logs"></section>
+</body>
