@@ -6,25 +6,13 @@ export const killAll = () => {
 };
 
 export const webServer = () => {
-  return fetch("http://localhost:5000/api/launch/web", { method: "POST" }).then(
-    (r) => {
-      console.log("api/launch/web", r);
-    }
-  );
+  return fetch("http://localhost:5000/api/launch/web", { method: "POST" })
 };
 
 export const handsServer = () => {
-  return fetch("http://localhost:5000/api/launch/hands", { method: "POST" }).then(
-    (r) => {
-      console.log("api/launch/hands", r);
-    }
-  );
+  return fetch("http://localhost:5000/api/launch/hands", { method: "POST" })
 };
 
 export const leapServer = () => {
-  return fetch("http://localhost:5000/api/launch/leapd", { method: "POST" }).then(
-    (r) => {
-      console.log("api/launch/leapd", r);
-    }
-  );
+  return fetch("http://localhost:5000/api/launch/leapd", { method: "POST" })
 };
