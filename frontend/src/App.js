@@ -11,6 +11,7 @@ const KILLED = "KILLED";
 const FAILED_TO_KILL = 'FAILED_TO_KILL'; // not used yet
 const LAUNCHING = "LAUNCHING";
 const READY = "READY";
+const OPEN = 'OPEN';
 
 /** Available servers */
 const WEB_SERVER = 'WEB_SERVER';
@@ -80,21 +81,21 @@ function App() {
       Utils.webServer().then(r => {
         if (r.ok) {
           console.log(WEB_SERVER, serversAck)
-          setServersAck([...serversAck, WEB_SERVER]);
+          setServersAck(serversAck => [...serversAck, WEB_SERVER]);
         }
       })
 
       Utils.handsServer().then(r => {
         if (r.ok) {
           console.log(HANDS_SERVER, serversAck)
-          setServersAck([...serversAck, HANDS_SERVER]);
+          setServersAck(serversAck => [...serversAck, HANDS_SERVER]);
         }
       })
 
       Utils.leapServer().then(r => {
         if (r.ok) {
           console.log(LEAP_SERVER, serversAck)
-          setServersAck([...serversAck, LEAP_SERVER]);
+          setServersAck(serversAck => [...serversAck, LEAP_SERVER]);
         }
       })
 
@@ -114,7 +115,19 @@ function App() {
     }
   }, [screen, processesList, serversAck]);
 
-  console.log('serversAck', serversAck)
+
+  const startTsunamilab = () => {
+    document.body.requestFullscreen();
+  }
+
+
+  React.useEffect(() => {
+    document.body.onkeypress = (ev) => {
+      if (screen == READY && (ev.key === 'Space' || ev.key === 'Enter')) {
+        startTsunamilab()
+      }
+    };
+  }, [screen])
   return (
     <>
       <div className={styles.App}>
@@ -128,6 +141,8 @@ function App() {
         <div>
           {serversAck.map(s => <div key={s}>{s}</div>)}
         </div>
+
+        {screen === READY && <button onClick={startTsunamilab}>START</button>}
       </div>
     </>
   );
