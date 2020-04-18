@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import styles from "./App.module.css";
 import * as Utils from "./Utils";
 
@@ -19,6 +18,7 @@ const HANDS_SERVER = 'HANDS_SERVER';
 const LEAP_SERVER = 'LEAP_SERVER';
 
 function App() {
+
   const [screen, setScreen] = React.useState(STARTING);
   const [processesList, setProcessesList] = React.useState([]);
   const [serversAck, setServersAck] = React.useState([]);
@@ -113,13 +113,17 @@ function App() {
         }
       }
     }
-  }, [screen, processesList, serversAck]);
 
+    if (screen == READY){
+      window.open("http://localhost:8000");
+      setScreen(OPEN);
+    }
+
+  }, [screen, processesList, serversAck]);
 
   const startTsunamilab = () => {
     document.body.requestFullscreen();
   }
-
 
   React.useEffect(() => {
     document.body.onkeypress = (ev) => {
@@ -142,7 +146,6 @@ function App() {
           {serversAck.map(s => <div key={s}>{s}</div>)}
         </div>
 
-        {screen === READY && <button onClick={startTsunamilab}>START</button>}
       </div>
     </>
   );
