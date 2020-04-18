@@ -19,8 +19,19 @@ const LEAP_SERVER = 'LEAP_SERVER';
 
 function App() {
 
+  /** Description of the current stage of the launcher */
   const [screen, setScreen] = React.useState(STARTING);
+  
+  /** List of host processes according to the lsof command 
+   * useful to know if a server (web, hands, leapd) is running or not.
+  */
+ 
   const [processesList, setProcessesList] = React.useState([]);
+  
+  /** List of servers (web, hands, leapd) for which the
+   * launcher backend has sent an ack, i.e., a "start" command
+   * has been sent.
+   */
   const [serversAck, setServersAck] = React.useState([]);
 
   React.useEffect(() => {
@@ -77,24 +88,20 @@ function App() {
     if (screen === KILLED) {
       setScreen(LAUNCHING);
 
-      /** This is BUGGED: serversAck never gets updated */
       Utils.webServer().then(r => {
         if (r.ok) {
-          console.log(WEB_SERVER, serversAck)
           setServersAck(serversAck => [...serversAck, WEB_SERVER]);
         }
       })
 
       Utils.handsServer().then(r => {
         if (r.ok) {
-          console.log(HANDS_SERVER, serversAck)
           setServersAck(serversAck => [...serversAck, HANDS_SERVER]);
         }
       })
 
       Utils.leapServer().then(r => {
         if (r.ok) {
-          console.log(LEAP_SERVER, serversAck)
           setServersAck(serversAck => [...serversAck, LEAP_SERVER]);
         }
       })
@@ -122,16 +129,17 @@ function App() {
   }, [screen, processesList, serversAck]);
 
   const startTsunamilab = () => {
-    document.body.requestFullscreen();
+    window.open("http://localhost:8000");
   }
 
   React.useEffect(() => {
     document.body.onkeypress = (ev) => {
-      if (screen == READY && (ev.key === 'Space' || ev.key === 'Enter')) {
+      if (screen == OPEN && (ev.key === ' ' || ev.key === 'Enter')) {
         startTsunamilab()
       }
     };
-  }, [screen])
+  }, [screen]);
+
   return (
     <>
       <div className={styles.App}>
