@@ -39,3 +39,27 @@ circle {
   50% {color: hsl(188, 88%, 40%); }
   100% {color: var(--primary-text-color);}
 }
+
+
+.serversStatus {
+  /* display: flex;
+  flex-direction: column; */
+  margin-top: 1em;
+}
+.serverRow {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.2em;
+}
+.circle {
+  background-color: var(--primary-text-color);
+  width: 1em;
+  height: 1em;
+  border-radius: 1em;
+  margin-right: 0.3em;
+}
+
+.failed {
+  background-color: var(--tertiary-color);
+}
+

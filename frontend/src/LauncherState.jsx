@@ -8,10 +8,22 @@ export default function ({ screen, processesList, serversAck, screenOrder }) {
     (screenOrder.findIndex((s) => s === screen) / (screenOrder.length - 1)) *
       100
   );
-  console.log([
-    getComputedStyle(document.body).getPropertyValue("--tertiary-color"),
-    getComputedStyle(document.body).getPropertyValue("--primary-text-color"),
-  ]);
+
+  const expectedServers = [
+    { name: "leapd", port: 6436 },
+    { name: "leapd", port: 6437 },
+    { name: "leapd", port: 6438 },
+    { name: "leapd", port: 6439 },
+    { name: "web", port: 8000 },
+    { name: "hands", port: 8765 },
+  ];
+
+  const serversStatus = expectedServers.map((server) => {
+    return {
+      ...server,
+      isListening: processesList.some((p) => p.includes(server.port)),
+    };
+  });
 
   return (
     <>
@@ -35,24 +47,24 @@ export default function ({ screen, processesList, serversAck, screenOrder }) {
         {screen === OPEN && (
           <div className={styles.subtitle}>Press SPACE or ENTER to start</div>
         )}
-        {/* <div className={styles.serversStatus}>
-          <ul>
-            <li>web</li>
-            <li>hands</li>
-            <li>leapd</li>
-          </ul>
-        </div> */}
-        {/* <div>
-          {processesList.map((r) => (
-            <div key={r}>{r}</div>
-          ))}
-        </div> */}
-
-        {/* <div>
-          {serversAck.map((s) => (
-            <div key={s}>{s}</div>
-          ))}
-        </div> */}
+        <div className={styles.serversStatus}>
+          {serversStatus.map((server) => {
+            return (
+              <div
+                key={`${server.name}:${server.port}`}
+                className={styles.serverRow}
+              >
+                <div
+                  className={[
+                    styles.circle,
+                    !server.isListening ? styles.failed : "",
+                  ].join(" ")}
+                ></div>
+                <span>{`${server.name}:${server.port}`}</span>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
