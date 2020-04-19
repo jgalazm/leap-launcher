@@ -24,3 +24,18 @@ circle {
   color: var(--primary-text-color);
   font-weight: 500;
 }
+
+
+.subtitle {
+  margin-top: 0.5em;
+  animation-name: blink;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+}
+
+
+@keyframes blink {
+  0% {color: var(--primary-text-color);}
+  50% {color: hsl(188, 88%, 40%); }
+  100% {color: var(--primary-text-color);}
+}

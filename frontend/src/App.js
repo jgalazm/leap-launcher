@@ -10,7 +10,7 @@ const KILLED = "KILLED";
 const FAILED_TO_KILL = 'FAILED_TO_KILL'; // not used yet
 const LAUNCHING = "LAUNCHING";
 const READY = "READY";
-const OPEN = 'OPEN';
+export const OPEN = 'OPEN';
 
 const order = [
   STARTING,
