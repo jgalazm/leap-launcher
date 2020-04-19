@@ -1,24 +1,26 @@
+body {
+  background-color: var(--primary-color);
+  color: var(--secondary-text-color);;
+}
+
 .App {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 35%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  text-align: left;
 }
 
-.App-link {
-  color: #61dafb;
+circle {
+  transition: 0.5s linear;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header {
+  font-size: large;
+  color: var(--primary-text-color);
+  font-weight: 500;
 }

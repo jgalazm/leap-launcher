@@ -12,6 +12,17 @@ const LAUNCHING = "LAUNCHING";
 const READY = "READY";
 const OPEN = 'OPEN';
 
+const order = [
+  STARTING,
+  KILLING,
+  KILLING_ACK,
+  KILLED,
+  FAILED_TO_KILL,
+  LAUNCHING,
+  READY,
+  OPEN
+];
+
 /** Available servers */
 const WEB_SERVER = 'WEB_SERVER';
 const HANDS_SERVER = 'HANDS_SERVER';
@@ -140,7 +151,43 @@ function App() {
     };
   }, [screen]);
 
-  return <LauncherState screen={screen} processesList={processesList} serversAck={serversAck} />
+  // const processesList = [
+  //   "systemd-r   808 systemd-resolve   13u  IPv4  24770      0t0  TCP 127.0.0.53:53 (LISTEN)\r",
+  //   "sshd       1670            root    3u  IPv4  42951      0t0  TCP *:22 (LISTEN)\r",
+  //   "sshd       1670            root    4u  IPv6  42953      0t0  TCP *:22 (LISTEN)\r",
+  //   "cupsd      6836            root    6u  IPv6  58321      0t0  TCP [::1]:631 (LISTEN)\r",
+  //   "cupsd      6836            root    7u  IPv4  58322      0t0  TCP 127.0.0.1:631 (LISTEN)\r",
+  //   "quart      8952            root   10u  IPv4  84133      0t0  TCP 127.0.0.1:5000 (LISTEN)\r",
+  //   "node       9160            root   22u  IPv4  84202      0t0  TCP *:80 (LISTEN)\r",
+  //   "python3   25154            jose    3u  IPv4 160060      0t0  TCP *:8000 (LISTEN)\r",
+  //   "python3   25223            jose    6u  IPv4 158208      0t0  TCP *:8765 (LISTEN)\r",
+  //   "leapd     25295            root   13u  IPv4 156549      0t0  TCP 127.0.0.1:6438 (LISTEN)\r",
+  //   "leapd     25295            root   15u  IPv4 156551      0t0  TCP 127.0.0.1:6439 (LISTEN)\r",
+  //   "leapd     25295            root   23u  IPv4 157158      0t0  TCP 127.0.0.1:6437 (LISTEN)\r",
+  //   "leapd     25295            root   25u  IPv4 155648      0t0  TCP 127.0.0.1:6436 (LISTEN)\r"
+  // ];
+
+
+  // const serversAck = [
+  //   "WEB_SERVER",
+  //   "HANDS_SERVER",
+  //   "LEAP_SERVER"
+  // ];
+
+  // React.useEffect(() => {
+  //   setInterval(() => {
+  //     setScreen(screen => {
+  //       const index = order.findIndex(s => s === screen);
+  //       setScreen(order[(index + 1) % (order.length - 1)]);
+  //     })
+  //   }, 5000);
+  // }, []);
+
+  return (<LauncherState
+    screen={screen}
+    screenOrder={order}
+    processesList={processesList}
+    serversAck={serversAck} />)
 }
 
 export default App;
