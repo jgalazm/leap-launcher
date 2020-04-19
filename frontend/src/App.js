@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./App.module.css";
+import LauncherState from './LauncherState';
 import * as Utils from "./Utils";
 
 /** Launcher status */
@@ -21,13 +21,13 @@ function App() {
 
   /** Description of the current stage of the launcher */
   const [screen, setScreen] = React.useState(STARTING);
-  
+
   /** List of host processes according to the lsof command 
    * useful to know if a server (web, hands, leapd) is running or not.
   */
- 
+
   const [processesList, setProcessesList] = React.useState([]);
-  
+
   /** List of servers (web, hands, leapd) for which the
    * launcher backend has sent an ack, i.e., a "start" command
    * has been sent.
@@ -121,7 +121,7 @@ function App() {
       }
     }
 
-    if (screen == READY){
+    if (screen == READY) {
       window.open("http://localhost:8000");
       setScreen(OPEN);
     }
@@ -140,23 +140,7 @@ function App() {
     };
   }, [screen]);
 
-  return (
-    <>
-      <div className={styles.App}>
-        <h1>{screen}</h1>
-        <div>
-          {processesList.map((r) => (
-            <div key={r}>{r}</div>
-          ))}
-        </div>
-
-        <div>
-          {serversAck.map(s => <div key={s}>{s}</div>)}
-        </div>
-
-      </div>
-    </>
-  );
+  return <LauncherState screen={screen} processesList={processesList} serversAck={serversAck} />
 }
 
 export default App;
