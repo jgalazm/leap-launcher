@@ -5,7 +5,7 @@ Launcher for a leap-app
 - docker
 - docker-compose
 
-A copy of this folder `https://github.com/Inria-Chile/leap-tsunami/tree/dev/websocket` at your home directory `~/`.
+A copy of [https://github.com/Inria-Chile/leap-tsunami/tree/dev/websocket](this folder) at your home directory `~/`.
 
 # Installing
 ```
