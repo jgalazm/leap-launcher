@@ -5,7 +5,7 @@ Launcher for a leap-app
 - docker
 - docker-compose
 
-A copy of [https://github.com/Inria-Chile/leap-tsunami/tree/dev/websocket](this folder) at your home directory `~/`.
+A copy of [this folder](https://github.com/Inria-Chile/leap-tsunami/tree/dev/websocket) in your home directory `~/`.
 
 # Installing
 ```
@@ -23,4 +23,4 @@ Make sure the `leapmotion` is connected.
 This app only launches the servers and does not check for the existance of the camera.
 Then
 `docker-compose up -d`
-Open your browser at [http://localhost](localhost)
+Open your browser at http://localhost
