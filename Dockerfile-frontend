@@ -7,8 +7,6 @@ COPY frontend/package.json .
 COPY frontend/yarn.lock .
 RUN yarn install
 
-# Expose port
-EXPOSE 3000
-
+ENV PORT=80
 # Run development server in runtime
-CMD sleep infinity
+CMD yarn start

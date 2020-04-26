@@ -17,6 +17,7 @@ services:
     # command: ['sleep', 'infinity']
 
   frontend:
+    stdin_open: true
     container_name: leap-launcher-frontend
     build:
       context: .
