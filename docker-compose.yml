@@ -26,3 +26,6 @@ services:
     image: launcherfrontend
     volumes:
       - ./frontend:/code
+    depends_on:
+      - launcher
+    restart: always
