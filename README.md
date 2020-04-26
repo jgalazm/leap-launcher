@@ -1,6 +1,7 @@
 # leap-launcher
 Launcher for a leap-app
 
+![Demo gif](https://raw.githubusercontent.com/jgalazm/leap-launcher/master/docs/demo.gif?token=AA2AL6KDY6G63FKDETRK33C6V437O "demo gif")
 # Requirements
 - docker
 - docker-compose
@@ -59,7 +60,7 @@ To start the application automatically without pressing any keys once all server
 
 # Possible improvements
 
-- [ ] Pass tsunami-leaps servers folder path in env vars
+- [ ] Pass tsunami-leap servers folder path in env vars
 - [ ] Write servers logs into separate files
 - [ ] Report fetch erros and timeouts in frontend
 - [ ] Check which ssh cleanups are necessary
