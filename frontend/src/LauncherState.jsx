@@ -33,14 +33,14 @@ export default function ({ screen, processesList, serversAck, screenOrder }) {
           strokeWidth={8}
           primaryColor={[
             getComputedStyle(document.body)
-              .getPropertyValue("--tertiary-color")
+              .getPropertyValue("--primary-text-color")
               .replace(" ", ""),
             getComputedStyle(document.body)
               .getPropertyValue("--primary-text-color")
               .replace(" ", ""),
           ]}
           secondaryColor={getComputedStyle(document.body)
-            .getPropertyValue("--primary-transparent-color")
+            .getPropertyValue("--secondary-color")
             .replace(" ", "")}
         />
         <div className={styles.header}>{screen}</div>

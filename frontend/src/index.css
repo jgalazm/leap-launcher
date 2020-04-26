@@ -13,6 +13,7 @@ body {
   --secondary-color: #010103;
   --tertiary-color: #ec6c2a;
   --primary-text-color: #7fe7f7;
+  --primary-text-highlighted: hsl(188, 88%, 90%);
   --secondary-text-color: #d2d2d3;
   --primary-transparent-color: rgba(27,27,77,.6)
 }

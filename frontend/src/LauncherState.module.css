@@ -45,6 +45,9 @@ circle {
   /* display: flex;
   flex-direction: column; */
   margin-top: 1em;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-gap: 0.5em;
 }
 .serverRow {
   display: flex;
@@ -60,6 +63,6 @@ circle {
 }
 
 .failed {
-  background-color: var(--tertiary-color);
+  background-color: #05434d;
 }
 
