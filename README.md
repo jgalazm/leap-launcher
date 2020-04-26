@@ -45,6 +45,8 @@ This app only launches the servers and does not check for the existance of the c
 
 Double click the icon in your desktop or open your browser at  http://localhost.
 
+To start the application automatically without pressing any keys once all servers are ready, you must enable popups for the http://localhost domain from your browser.
+
 
 # How it works
 The `leap-launcher`  uses `quart` for the backend and `react` for the frontend. 
@@ -55,8 +57,6 @@ sudo lsof -i -P -n   | grep LISTEN
 on the host.
 
 This information is used by the frontend to render the current status of the app. Everytime the user opens http://localhost it will poll the current status every 5 seconds and try to restart (kill and launch) all servers.
-
-To start the application automatically without pressing any keys once all servers are ready, you must enable popups for the http://localhost domain from your browser.
 
 # Possible improvements
 
