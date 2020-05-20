@@ -1,5 +1,5 @@
 # leap-launcher
-Launcher for a leap-app
+Launcher for the tsunamilab-leap
 
 ![Demo gif](https://github.com/jgalazm/leap-launcher/raw/master/docs/demo.gif)
 # Requirements
