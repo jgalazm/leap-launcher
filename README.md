@@ -1,7 +1,7 @@
 # leap-launcher
 Launcher for a leap-app
 
-![Demo gif](https://raw.githubusercontent.com/jgalazm/leap-launcher/master/docs/demo.gif?token=AA2AL6KDY6G63FKDETRK33C6V437O "demo gif")
+![Demo gif](https://github.com/jgalazm/leap-launcher/raw/master/docs/demo.gif)
 # Requirements
 - docker
 - docker-compose
